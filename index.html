@@ -290,8 +290,9 @@
   .detail-footer .inner-copyright { font-size:9px; letter-spacing:0.06em; color:var(--brown); opacity:0.4; }
   .detail-footer .inner-copyright a { color:rgba(255,255,255,0.4); }
 
-  ::-webkit-scrollbar { width:4px; }
-  ::-webkit-scrollbar-thumb { background:rgba(124,105,94,0.25); border-radius:2px; }
+  ::-webkit-scrollbar { width:0; display:none; }
+  ::-webkit-scrollbar-thumb { background:transparent; }
+  * { scrollbar-width:none; }
 
   /* ══ MOBILE ══ */
   @media (max-width: 768px) {
