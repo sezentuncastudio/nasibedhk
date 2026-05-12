@@ -94,12 +94,9 @@
   /* ── Global nav on home (transparent / white) ── */
   .inner-nav.on-home {
     background: transparent;
+    color: #ffffff;
   }
-  .inner-nav.on-home .menu-btn { color:#ffffff; opacity:0.85; }
-  .inner-nav.on-home .menu-dropdown {
-    background:rgba(0,0,0,0.3); padding:12px 20px; border-radius:3px;
-  }
-  .inner-nav.on-home .menu-dropdown a { color:#ffffff; }
+  .inner-nav.on-home .menu-wrap { display:none; }
   .menu-wrap {
     position:absolute; left:32px; top:50%; transform:translateY(-50%);
   }
@@ -644,7 +641,6 @@
       <a onclick="nav('products');closeMenu()">TRAJECTORY</a>
       <a onclick="nav('about');closeMenu()">ABOUT</a>
       <a onclick="nav('contact');closeMenu()">CONTACT</a>
-      <a onclick="openSheet('newsletter');closeMenu()">NEWSLETTER</a>
     </div>
   </div>
 </nav>
