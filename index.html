@@ -86,7 +86,7 @@
     position:fixed; top:0; left:0; right:0; z-index:200;
     display:flex; align-items:center; justify-content:center;
     padding:36px;
-    background:var(--white);
+    background:transparent;
   }
   .inner-logo-link {
     display:inline-flex; align-items:center; cursor:pointer;
@@ -647,7 +647,8 @@
 
 <script>
 // ── Hero image ──
-document.getElementById('hero-bg').style.backgroundImage = "url(home-hero.webp)";
+const isMobile = window.innerWidth <= 768;
+document.getElementById('hero-bg').style.backgroundImage = isMobile ? "url(home-hero-mobile.webp)" : "url(home-hero.webp)";
 
 
 // ── Menu toggle ──
