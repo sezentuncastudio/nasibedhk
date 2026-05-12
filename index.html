@@ -711,15 +711,20 @@ function nav(name) {
   const amblem = document.getElementById('amblem-container');
   if (amblem) amblem.style.display = (name === 'products' || name === 'contact' || name === 'detail') ? 'block' : 'none';
   const cr = document.querySelector('.inner-copyright');
-  if (cr) cr.classList.toggle('on-light', name !== 'home');
+  if (cr) {
+    cr.classList.toggle('on-light', name !== 'home');
+    if (name !== 'home') cr.classList.add('scroll-hidden');
+    else cr.classList.remove('scroll-hidden');
+  }
   window.scrollTo(0,0);
   Object.values(pageMap).forEach(id => {
     const el = document.getElementById(id);
-    if(el) { el.classList.remove('active'); el.style.display=''; }
+    if(el) { el.classList.remove('active'); el.style.display=''; el.scrollTop = 0; }
   });
   const target = document.getElementById(pageMap[name]);
   if(target) {
     target.classList.add('active');
+    target.scrollTop = 0;
   }
 }
 
