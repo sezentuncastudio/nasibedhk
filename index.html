@@ -75,8 +75,9 @@
     color:rgba(255,255,255,0.4);
     background:transparent;
     pointer-events:none;
-    transition:color 0.4s;
+    transition:transform 0.3s ease, color 0.4s;
   }
+  .inner-copyright.scroll-hidden { transform:translateY(100%); }
   .inner-copyright a { color:inherit; text-decoration:none; margin:0 8px; pointer-events:all; }
   .inner-copyright.on-light { color:rgba(124,105,94,0.45); }
 
@@ -341,23 +342,28 @@
   /* ══ MOBILE ══ */
   @media (max-width: 768px) {
 
-    /* Nav */
-    .inner-nav { padding:16px 20px; }
+    /* Nav — logo/menu biraz aşağıda, ortalı hissettirsin */
+    .inner-nav { padding:24px 20px; }
     .menu-wrap { left:20px; }
 
     /* Products grid — single column */
     .products-grid { grid-template-columns:1fr; padding-bottom:48px; }
     .product-card:nth-child(even) .product-name { text-align:left; }
 
-    /* About */
+    /* About — tek görsel */
     .text-center { padding:40px 28px; }
-    .split-pair { height:280px; }
+    .split-pair { grid-template-columns:1fr; height:auto; }
+    .split-half { height:280px; }
+    .split-half:nth-child(2) { display:none; }
 
-    /* Contact */
-    .contact-body { padding:44px 28px; }
+    /* Contact hero dikdörtgen kalsın */
+    .contact-hero { height:56vw; max-height:280px; }
+
+    /* Contact — alt boşluk */
+    .contact-body { padding:44px 28px 88px; }
     .contact-cols { grid-template-columns:1fr; gap:20px; }
 
-    /* Home wordmark — hide on very small */
+    /* Home wordmark */
     .home-wordmark svg { height:10px; }
     .home-nav { padding-bottom:110px; }
     .home-nav-links { gap:28px; }
@@ -366,14 +372,14 @@
     /* Copyright */
     .home-copyright { font-size:8px; }
 
-    /* Sheets / Popups */
+    /* Sheets / Popups — close sağ üstte başlıkla hizalı */
     .sheet-inner {
       grid-template-columns:1fr;
       padding:36px 24px 48px;
       gap:0;
     }
     .sheet-inner > div:first-child { display:none; }
-    .sheet-close { text-align:right; margin-top:32px; }
+    .sheet-close { position:absolute; right:24px; top:36px; margin-top:0; text-align:left; }
     .sheet { max-height:90vh; }
   }
 </style>
@@ -903,9 +909,14 @@ function openDetail(id) {
 }
 
 function alignEnquire() {
-  const firstImg = document.querySelector('#page-detail .detail-img:first-child');
   const detailLeft = document.querySelector('#page-detail .detail-left');
-  if (!firstImg || !detailLeft) return;
+  if (!detailLeft) return;
+  if (window.innerWidth <= 1300) {
+    detailLeft.style.paddingBottom = '';
+    return;
+  }
+  const firstImg = document.querySelector('#page-detail .detail-img:first-child');
+  if (!firstImg) return;
   detailLeft.style.paddingBottom = '';
   const imgBottom = firstImg.getBoundingClientRect().bottom;
   const leftBottom = detailLeft.getBoundingClientRect().bottom;
@@ -916,6 +927,24 @@ function alignEnquire() {
 window.addEventListener('resize', function() {
   if (document.querySelector('#page-detail.active')) alignEnquire();
 });
+
+// Copyright: hide on scroll down, show on scroll up (non-home pages)
+(function() {
+  const cr = document.querySelector('.inner-copyright');
+  if (!cr) return;
+  let lastY = 0;
+  function handleScroll(e) {
+    if (document.getElementById('page-home').classList.contains('active')) {
+      cr.classList.remove('scroll-hidden'); lastY = 0; return;
+    }
+    const src = e.target.scrollTop != null && e.target !== document ? e.target : window;
+    const y = src === window ? window.scrollY : src.scrollTop;
+    if (y > lastY && y > 60) cr.classList.add('scroll-hidden');
+    else cr.classList.remove('scroll-hidden');
+    lastY = y;
+  }
+  document.addEventListener('scroll', handleScroll, { passive:true, capture:true });
+})();
 
 </script>
 
