@@ -145,11 +145,11 @@
   .product-card:nth-child(even) .product-name { text-align:right; }
 
   /* ══ PRODUCT DETAIL ══ */
-  #page-detail { padding-top:69px; }
+  #page-detail { padding-top:0; }
 
   .detail-layout {
     position:relative;
-    height:calc(100vh - 69px);
+    height:100vh;
     overflow:hidden;
   }
 
@@ -161,7 +161,7 @@
     z-index:10;
     background:var(--white);
     overflow-y:auto;
-    padding:50px 36px 50px 32px;
+    padding:90px 36px 50px 32px;
     display:flex;
     flex-direction:column;
   }
@@ -210,7 +210,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:48px 40px;
+    padding:0 40px;
     gap:48px;
   }
   .detail-right::-webkit-scrollbar { width:0; }
@@ -907,19 +907,30 @@ window.addEventListener('resize', function() {
   if (document.querySelector('#page-detail.active')) alignEnquire();
 });
 
-// Copyright: hide on scroll down, show on scroll up (non-home pages)
+// Copyright: hide on scroll down, show on scroll up; always show at bottom
 (function() {
   const cr = document.querySelector('.inner-copyright');
   if (!cr) return;
   let lastY = 0;
+  function isAtBottom(el) {
+    if (el && el !== window && el !== document) {
+      return el.scrollTop + el.clientHeight >= el.scrollHeight - 24;
+    }
+    return window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 24;
+  }
   function handleScroll(e) {
     if (document.getElementById('page-home').classList.contains('active')) {
       cr.classList.remove('scroll-hidden'); lastY = 0; return;
     }
-    const src = e.target.scrollTop != null && e.target !== document ? e.target : window;
-    const y = src === window ? window.scrollY : src.scrollTop;
-    if (y > lastY && y > 60) cr.classList.add('scroll-hidden');
-    else cr.classList.remove('scroll-hidden');
+    const el = (e.target !== document && e.target.scrollTop != null) ? e.target : null;
+    const y = el ? el.scrollTop : window.scrollY;
+    if (isAtBottom(el)) {
+      cr.classList.remove('scroll-hidden');
+    } else if (y > lastY && y > 60) {
+      cr.classList.add('scroll-hidden');
+    } else {
+      cr.classList.remove('scroll-hidden');
+    }
     lastY = y;
   }
   document.addEventListener('scroll', handleScroll, { passive:true, capture:true });
