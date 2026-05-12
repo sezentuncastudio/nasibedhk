@@ -270,11 +270,12 @@
     transform:translateY(100%); transition:transform 0.42s cubic-bezier(0.32,0.72,0,1);
   }
   .overlay.open .sheet { transform:translateY(0); }
+  .sheet { position:relative; }
   .sheet-inner { display:grid; grid-template-columns:80px 1fr 80px; max-width:820px; margin:0 auto; padding:50px 40px 60px; gap:60px; }
   .sheet-content h3 { font-size:9.7px; letter-spacing:0.22em; text-transform:uppercase; font-weight:500; margin-bottom:22px; }
   .sheet-content p { font-size:11.4px; line-height:1.75; margin-bottom:14px; }
   .sheet-content .slabel { font-size:9.7px; letter-spacing:0.12em; text-transform:uppercase; font-weight:400; margin:18px 0 5px; }
-  .sheet-close { font-size:9.7px; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; color:var(--brown); text-align:right; opacity:0.55; padding-top:2px; }
+  .sheet-close { position:absolute; right:32px; top:50px; font-size:9.7px; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; color:var(--brown); opacity:0.55; }
   .sheet-close:hover { opacity:1; }
 
   /* enquiry form */
