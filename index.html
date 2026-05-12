@@ -85,7 +85,7 @@
   .inner-nav {
     position:fixed; top:0; left:0; right:0; z-index:200;
     display:flex; align-items:center; justify-content:center;
-    padding:36px;
+    padding:28px 36px;
     background:transparent;
   }
   .inner-logo-link {
@@ -125,7 +125,7 @@
   .menu-dropdown a:hover { opacity:1; }
 
   /* ══ ALL PRODUCTS ══ */
-  #page-products { padding-top:85px; }
+  #page-products { padding-top:0; }
   .products-grid { display:grid; grid-template-columns:1fr 1fr; }
   .product-card { display:flex; flex-direction:column; cursor:pointer; }
   .product-img-wrap {
@@ -145,11 +145,11 @@
   .product-card:nth-child(even) .product-name { text-align:right; }
 
   /* ══ PRODUCT DETAIL ══ */
-  #page-detail { padding-top:85px; }
+  #page-detail { padding-top:0; }
 
   .detail-layout {
     position:relative;
-    height:calc(100vh - 85px);
+    height:100vh;
     overflow:hidden;
   }
 
@@ -161,7 +161,7 @@
     z-index:10;
     background:var(--white);
     overflow-y:auto;
-    padding:50px 36px 50px 32px;
+    padding:118px 36px 50px 32px;
     display:flex;
     flex-direction:column;
   }
@@ -210,7 +210,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:48px 40px;
+    padding:0 40px;
     gap:48px;
   }
   .detail-right::-webkit-scrollbar { width:0; }
@@ -227,7 +227,7 @@
   .detail-img img { width:100%; height:auto; display:block; object-fit:contain; }
 
   /* ══ ABOUT ══ */
-  #page-about { padding-top:85px; flex-direction:column; align-items:center; text-align:center; }
+  #page-about { padding-top:69px; flex-direction:column; align-items:center; text-align:center; }
   #page-about.active { display:flex; }
   #page-about .split-pair { width:100%; }
   .about-portrait { width:260px; aspect-ratio:3/4; margin:30px auto 50px; background:#ffffff; overflow:hidden; }
@@ -242,7 +242,7 @@
   .split-ph { width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:9.7px;color:rgba(255,255,255,0.2); }
 
   /* ══ CONTACT ══ */
-  #page-contact { padding-top:85px; }
+  #page-contact { padding-top:0; }
   .contact-hero { height:50vh; background:#3a2a22; overflow:hidden; }
   .contact-hero img { width:100%;height:100%;object-fit:cover; }
   .contact-body { max-width:680px; margin:0 auto; padding:70px 40px; }
