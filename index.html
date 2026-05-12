@@ -154,7 +154,7 @@
     z-index:10;
     background:var(--white);
     overflow-y:auto;
-    padding:50px 36px 67px 32px;
+    padding:50px 36px 50px 32px;
     display:flex;
     flex-direction:column;
   }
@@ -215,8 +215,7 @@
     background:transparent;
     margin:0 auto;
   }
-  .detail-img:first-child { aspect-ratio:unset; overflow:visible; }
-  .detail-img:first-child img { width:auto; max-width:100%; height:auto; max-height:calc(100vh - 200px); }
+  .detail-img:first-child { aspect-ratio:unset; overflow:hidden; }
   .detail-img:nth-child(2) { aspect-ratio:unset; background:transparent; }
   .detail-img img { width:100%; height:auto; display:block; object-fit:contain; }
 
@@ -894,7 +893,29 @@ function openDetail(id) {
   if (right) right.scrollTop = 0;
 
   nav('detail');
+
+  // Align ENQUIRE with first image bottom after image loads
+  const fi = document.querySelector('#page-detail .detail-img:first-child img');
+  if (fi) {
+    if (fi.complete) { setTimeout(alignEnquire, 50); }
+    else { fi.addEventListener('load', function() { setTimeout(alignEnquire, 50); }); }
+  }
 }
+
+function alignEnquire() {
+  const firstImg = document.querySelector('#page-detail .detail-img:first-child');
+  const detailLeft = document.querySelector('#page-detail .detail-left');
+  if (!firstImg || !detailLeft) return;
+  detailLeft.style.paddingBottom = '';
+  const imgBottom = firstImg.getBoundingClientRect().bottom;
+  const leftBottom = detailLeft.getBoundingClientRect().bottom;
+  const needed = Math.max(24, leftBottom - imgBottom);
+  detailLeft.style.paddingBottom = needed + 'px';
+}
+
+window.addEventListener('resize', function() {
+  if (document.querySelector('#page-detail.active')) alignEnquire();
+});
 
 </script>
 
