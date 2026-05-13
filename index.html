@@ -756,7 +756,10 @@ const pageMap = {
   about:'page-about', contact:'page-contact', privacy:'page-privacy', terms:'page-terms'
 };
 
-function nav(name) {
+function nav(name, pushHistory) {
+  if (pushHistory !== false) {
+    history.pushState({ page: name }, '', '#' + name);
+  }
   closeMenu();
   const amblem = document.getElementById('amblem-container');
   if (amblem) amblem.style.display = (name === 'products' || name === 'contact' || name === 'detail') ? 'block' : 'none';
@@ -779,6 +782,14 @@ function nav(name) {
     target.scrollTop = 0;
   }
 }
+
+window.addEventListener('popstate', function(e) {
+  const page = (e.state && e.state.page) ? e.state.page : 'home';
+  nav(page, false);
+});
+
+// Set initial history state so back button works from first page
+history.replaceState({ page: 'home' }, '', window.location.href);
 
 // ── Sheets ──
 function openSheet(name) {
