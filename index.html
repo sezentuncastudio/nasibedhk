@@ -419,6 +419,18 @@
     .sheet { max-height:90vh; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  // ── EmailJS config ──────────────────────────────────────────────────────
+  // 1) emailjs.com → sign up → add Email Service (Gmail) → copy Service ID
+  // 2) Create Template → copy Template ID  (variables: {{product}}, {{first_name}},
+  //    {{last_name}}, {{email}}, {{phone}}, {{size}}, {{message}})
+  // 3) Account → API Keys → copy Public Key
+  const EJ_SERVICE  = 'YOUR_SERVICE_ID';   // ← buraya service id
+  const EJ_TEMPLATE = 'YOUR_TEMPLATE_ID';  // ← buraya template id
+  const EJ_PUBLIC   = 'YOUR_PUBLIC_KEY';   // ← buraya public key
+  emailjs.init({ publicKey: EJ_PUBLIC });
+</script>
 </head>
 <body>
 
@@ -679,14 +691,17 @@
       <div></div>
       <div class="sheet-content">
         <h3>Enquire</h3>
-        <div class="eq-grid">
-          <div class="eq-field"><input type="text" placeholder="First Name"></div>
-          <div class="eq-field"><input type="text" placeholder="Last Name"></div>
-          <div class="eq-field full"><input type="email" placeholder="Email"></div>
-          <div class="eq-field full"><input type="tel" placeholder="Phone"></div>
-          <div class="eq-field full"><input type="text" placeholder="Size"></div>
-          <div class="eq-field full"><textarea placeholder="Message"></textarea></div>
-          <div class="eq-submit"><button>Submit</button></div>
+        <div class="eq-grid" id="eq-grid">
+          <div class="eq-field"><input id="eq-first" type="text" placeholder="First Name"></div>
+          <div class="eq-field"><input id="eq-last" type="text" placeholder="Last Name"></div>
+          <div class="eq-field full"><input id="eq-email" type="email" placeholder="Email"></div>
+          <div class="eq-field full"><input id="eq-phone" type="tel" placeholder="Phone"></div>
+          <div class="eq-field full"><input id="eq-size" type="text" placeholder="Size"></div>
+          <div class="eq-field full"><textarea id="eq-message" placeholder="Message"></textarea></div>
+          <div class="eq-submit"><button id="eq-btn" onclick="submitEnquire(event)">Submit</button></div>
+        </div>
+        <div id="eq-success" style="display:none;font-size:10.6px;letter-spacing:0.04em;opacity:0.65;padding:24px 0 8px;">
+          Thank you. We will be in touch shortly.
         </div>
       </div>
       <div class="sheet-close" onclick="closeSheet('enquire')">CLOSE</div>
@@ -790,6 +805,17 @@ function openSheet(name) {
 function closeSheet(name) {
   const o = document.getElementById('overlay-'+name);
   if(!o) return;
+  if (name === 'enquire') {
+    ['eq-first','eq-last','eq-email','eq-phone','eq-size','eq-message'].forEach(id => {
+      const el = document.getElementById(id); if(el) el.value = '';
+    });
+    const grid = document.getElementById('eq-grid');
+    const succ = document.getElementById('eq-success');
+    if(grid) grid.style.display = '';
+    if(succ) succ.style.display = 'none';
+    const btn = document.getElementById('eq-btn');
+    if(btn) { btn.textContent = 'Submit'; btn.style.pointerEvents = ''; }
+  }
   o.classList.remove('open');
   setTimeout(()=>{ o.style.display='none'; document.body.style.overflow=''; }, 450);
 }
@@ -993,6 +1019,39 @@ window.addEventListener('resize', function() {
   }
   document.addEventListener('scroll', handleScroll, { passive:true, capture:true });
 })();
+
+// ── Enquire form submit ─────────────────────────────────────────────────────
+function submitEnquire(e) {
+  e.preventDefault();
+  const btn = document.getElementById('eq-btn');
+  const email = document.getElementById('eq-email').value.trim();
+  if (!email) { document.getElementById('eq-email').focus(); return; }
+
+  btn.textContent = '...';
+  btn.style.pointerEvents = 'none';
+
+  const params = {
+    product:    currentProduct ? currentProduct.name : '',
+    first_name: document.getElementById('eq-first').value.trim(),
+    last_name:  document.getElementById('eq-last').value.trim(),
+    email:      email,
+    phone:      document.getElementById('eq-phone').value.trim(),
+    size:       document.getElementById('eq-size').value.trim(),
+    message:    document.getElementById('eq-message').value.trim(),
+  };
+
+  emailjs.send(EJ_SERVICE, EJ_TEMPLATE, params)
+    .then(() => {
+      document.getElementById('eq-grid').style.display = 'none';
+      document.getElementById('eq-success').style.display = 'block';
+    })
+    .catch(() => {
+      btn.textContent = 'Submit';
+      btn.style.pointerEvents = '';
+      alert('Something went wrong. Please email us directly at info@nasibedhk.com');
+    });
+}
+
 
 </script>
 
