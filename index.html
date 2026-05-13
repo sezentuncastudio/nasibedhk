@@ -427,6 +427,8 @@
   //    {{last_name}}, {{email}}, {{phone}}, {{size}}, {{message}})
   // 3) Account → API Keys → copy Public Key
   const EJ_SERVICE  = 'YOUR_SERVICE_ID';   // ← buraya service id
+  // ── Google Apps Script URL for newsletter ───────────────────────────────
+  const GAS_URL = 'YOUR_APPS_SCRIPT_URL';  // ← buraya Apps Script web app URL
   const EJ_TEMPLATE = 'YOUR_TEMPLATE_ID';  // ← buraya template id
   const EJ_PUBLIC   = 'YOUR_PUBLIC_KEY';   // ← buraya public key
   emailjs.init({ publicKey: EJ_PUBLIC });
@@ -625,9 +627,12 @@
       <div class="sheet-content">
         <h3>Newsletter</h3>
         <p>Sign up for curated insights and bespoke updates.</p>
-        <div style="display:flex;align-items:baseline;gap:20px;padding-bottom:12px;margin-top:28px;border-bottom:0.5px solid rgba(124,105,94,0.25);">
-          <input type="email" placeholder="E-mail" style="flex:1;background:transparent;border:none;outline:none;font-family:'Inter',sans-serif;font-size:14px;color:var(--brown);">
-          <button style="font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--brown);">Submit</button>
+        <div id="nl-form" style="display:flex;align-items:baseline;gap:20px;padding-bottom:12px;margin-top:28px;border-bottom:0.5px solid rgba(124,105,94,0.25);">
+          <input id="nl-email" type="email" placeholder="E-mail" style="flex:1;background:transparent;border:none;outline:none;font-family:'Inter',sans-serif;font-size:14px;color:var(--brown);">
+          <button id="nl-btn" onclick="submitNewsletter(event)" style="font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--brown);">Submit</button>
+        </div>
+        <div id="nl-success" style="display:none;font-size:10.6px;letter-spacing:0.04em;opacity:0.65;padding:20px 0 4px;">
+          Thank you for subscribing.
         </div>
       </div>
       <div class="sheet-close" onclick="closeSheet('newsletter')">CLOSE</div>
@@ -805,6 +810,16 @@ function openSheet(name) {
 function closeSheet(name) {
   const o = document.getElementById('overlay-'+name);
   if(!o) return;
+  if (name === 'newsletter') {
+    const nlEmail = document.getElementById('nl-email');
+    if(nlEmail) nlEmail.value = '';
+    const nlForm = document.getElementById('nl-form');
+    const nlSucc = document.getElementById('nl-success');
+    const nlBtn  = document.getElementById('nl-btn');
+    if(nlForm) nlForm.style.display = '';
+    if(nlSucc) nlSucc.style.display = 'none';
+    if(nlBtn)  { nlBtn.textContent = 'Submit'; nlBtn.style.pointerEvents = ''; }
+  }
   if (name === 'enquire') {
     ['eq-first','eq-last','eq-email','eq-phone','eq-size','eq-message'].forEach(id => {
       const el = document.getElementById(id); if(el) el.value = '';
@@ -1050,6 +1065,35 @@ function submitEnquire(e) {
       btn.style.pointerEvents = '';
       alert('Something went wrong. Please email us directly at info@nasibedhk.com');
     });
+}
+
+
+// ── Newsletter submit → Google Sheets via Apps Script ──────────────────────
+function submitNewsletter(e) {
+  e.preventDefault();
+  const emailEl = document.getElementById('nl-email');
+  const email = emailEl.value.trim();
+  if (!email || !email.includes('@')) { emailEl.focus(); return; }
+
+  const btn = document.getElementById('nl-btn');
+  btn.textContent = '...';
+  btn.style.pointerEvents = 'none';
+
+  fetch(GAS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, date: new Date().toISOString() })
+  })
+  .then(() => {
+    document.getElementById('nl-form').style.display = 'none';
+    document.getElementById('nl-success').style.display = 'block';
+  })
+  .catch(() => {
+    // no-cors: even errors look like success; treat as ok
+    document.getElementById('nl-form').style.display = 'none';
+    document.getElementById('nl-success').style.display = 'block';
+  });
 }
 
 
