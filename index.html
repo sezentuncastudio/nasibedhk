@@ -185,7 +185,8 @@
   .detail-left h3 { font-size:11.4px; letter-spacing:0.12em; text-transform:uppercase; font-weight:500; margin-bottom:10px; }
   .detail-left p { font-size:11.4px; line-height:1.7; margin-bottom:16px; }
   .detail-left .label { font-size:8.8px; letter-spacing:0.14em; text-transform:uppercase; opacity:0.5; margin-bottom:3px; margin-top:4px; }
-  .detail-left .price { font-size:13.2px; margin:12px 0 4px; }
+  .detail-left .price { font-size:13.2px; margin:12px 0 2px; }
+  .detail-left .price-vat { font-size:8.8px; letter-spacing:0.1em; opacity:0.45; margin-bottom:4px; }
   .detail-left .note { font-size:9.7px; line-height:1.55; opacity:0.48; margin-top:6px; margin-bottom:16px; }
   .detail-links { display:flex; flex-direction:column; gap:9px; margin-top:28px; margin-bottom:44px; }
   .detail-link {
@@ -862,7 +863,7 @@ const PRODUCTS = {
     material: 'Hand-carved Rosewood with embedded natural rubies.',
     materialFull: 'Rosewood, Sterling Silver (.925), Natural Rubies.',
     sizing: '53, 54, 55',
-    price: '$850',
+    price: '$1,020',
     note: 'Each block of wood is naturally unique and may differ slightly from the images shown. Carat weight may also vary per piece.',
     imgs: ['ruby-ring-1.webp','ruby-ring-2.webp']
   },
@@ -872,7 +873,7 @@ const PRODUCTS = {
     material: 'Hand-carved Rosewood set with pink sapphire.',
     materialFull: 'Rosewood, Sterling Silver (.925), Natural Pink Sapphire.',
     sizing: '53, 54, 55',
-    price: '$800',
+    price: '$960',
     note: 'Each block of wood is naturally unique and may differ slightly from the images shown. Carat weight may also vary per piece.',
     imgs: ['slim-ring-1.webp','slim-ring-2.webp']
   },
@@ -892,7 +893,7 @@ const PRODUCTS = {
     material: 'Hand-carved Rosewood with hand-carved silver links.',
     materialFull: 'Rosewood, Sterling Silver (.925) hand-carved links.',
     sizing: 'Petite 18cm or shorter / Regular 18cm to 21cm / Large 21cm to 25cm',
-    price: '$1,000',
+    price: '$1,200',
     note: 'Each block of wood is naturally unique and may differ slightly from the images shown.',
     imgs: ['link-bracelet-1.webp','link-bracelet-2.webp']
   },
@@ -902,7 +903,7 @@ const PRODUCTS = {
     material: 'Hand-carved Rosewood with embedded zircon.',
     materialFull: 'Rosewood, Sterling Silver (.925) hand-carved links, Champagne Zircon.',
     sizing: 'Petite 18cm or shorter / Regular 18cm to 21cm / Large 21cm to 25cm',
-    price: '$1,850',
+    price: '$2,220',
     note: 'Each block of wood is naturally unique and may differ slightly from the images shown. Carat weight may also vary per piece.',
     imgs: ['link-bracelet-zircon-1.webp','link-bracelet-zircon-2.webp']
   },
@@ -922,7 +923,7 @@ const PRODUCTS = {
     material: 'Hand-carved Rosewood with hand-carved silver links.',
     materialFull: 'Rosewood, Sterling Silver (.925) hand-carved links.',
     sizing: 'Individual link 17mm × 13mm, total length approx. 28mm',
-    price: '$600',
+    price: '$720',
     note: 'Each block of wood is naturally unique and may differ slightly from the images shown.',
     imgs: ['link-earring-1.webp','link-earring-2.webp']
   },
@@ -942,7 +943,7 @@ const PRODUCTS = {
     material: 'Hand-carved Rosewood with embedded 1.4 carats natural rubies.',
     materialFull: 'Rosewood, Sterling Silver (.925) hand-carved links, Natural Rubies (1.4 ct).',
     sizing: '50cm',
-    price: '$2,500',
+    price: '$3,000',
     note: 'Each block of wood is naturally unique and may differ slightly from the images shown.',
     imgs: ['link-necklace-ruby-1.webp','link-necklace-ruby-2.webp']
   }
@@ -965,6 +966,7 @@ function openDetail(id) {
     <p>${p.sizing}</p>
     <div class="note">${p.note}</div>
     <div class="price">${p.price}</div>
+    <div class="price-vat">VAT included</div>
     <div class="detail-links">
       <span class="detail-link" onclick="openSheet('care')">Composition &amp; Care</span>
       <span class="detail-link" onclick="openSheet('delivery')">Delivery &amp; Shipping</span>
