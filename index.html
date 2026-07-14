@@ -143,6 +143,12 @@
     padding:13px 20px; background:var(--white);
   }
   .product-card:nth-child(even) .product-name { text-align:right; }
+  .product-price {
+    font-size:9px; letter-spacing:0.1em;
+    padding:0 20px 13px; background:var(--white);
+    opacity:0.55;
+  }
+  .product-card:nth-child(even) .product-price { text-align:right; }
 
   /* ══ PRODUCT DETAIL ══ */
   #page-detail { padding-top:0; }
@@ -441,7 +447,7 @@
      HOME
 ════════════════════════════════ -->
 <div id="page-home" class="page active">
-  <div class="bg" id="hero-bg"></div>
+  <div class="bg" id="hero-bg" onclick="nav('products')" style="cursor:pointer;"></div>
 
   <div class="home-nav">
     <div class="home-nav-links">
@@ -461,38 +467,47 @@
     <div class="product-card" onclick="openDetail('ruby-ring')">
       <div class="product-img-wrap"><img src="grid-ruby-ring.webp" onerror="this.style.display='none'" alt="Ruby Ring"><span class="ph">Ruby Ring</span></div>
       <div class="product-name">RUBY RING</div>
+      <div class="product-price">$1,020</div>
     </div>
     <div class="product-card" onclick="openDetail('slim-ring')">
       <div class="product-img-wrap"><img src="grid-slim-ring.webp" onerror="this.style.display='none'" alt="Slim Ring"><span class="ph">Slim Ring</span></div>
       <div class="product-name">SLIM RING</div>
+      <div class="product-price">$960</div>
     </div>
     <div class="product-card" onclick="openDetail('chunky-ring')">
       <div class="product-img-wrap"><img src="grid-chunky-ring.webp" onerror="this.style.display='none'" alt="Chunky Ring"><span class="ph">Chunky Ring</span></div>
       <div class="product-name">CHUNKY RING</div>
+      <div class="product-price">$700</div>
     </div>
     <div class="product-card" onclick="openDetail('link-bracelet')">
       <div class="product-img-wrap"><img src="grid-link-bracelet.webp" onerror="this.style.display='none'" alt="Link Bracelet"><span class="ph">Link Bracelet</span></div>
       <div class="product-name">LINK BRACELET</div>
+      <div class="product-price">$1,200</div>
     </div>
     <div class="product-card" onclick="openDetail('link-bracelet-zircon')">
       <div class="product-img-wrap"><img src="grid-link-bracelet-zircon.webp" onerror="this.style.display='none'" alt="Link Bracelet Zircon"><span class="ph">Link Bracelet Zircon</span></div>
       <div class="product-name">LINK BRACELET ZIRCON</div>
+      <div class="product-price">$2,220</div>
     </div>
     <div class="product-card" onclick="openDetail('knot-bracelet')">
       <div class="product-img-wrap"><img src="grid-knot-bracelet.webp" onerror="this.style.display='none'" alt="Knot Bracelet"><span class="ph">Knot Bracelet</span></div>
       <div class="product-name">KNOT BRACELET</div>
+      <div class="product-price">$700</div>
     </div>
     <div class="product-card" onclick="openDetail('link-earring')">
       <div class="product-img-wrap"><img src="grid-link-earring.webp" onerror="this.style.display='none'" alt="Link Earring"><span class="ph">Link Earring</span></div>
       <div class="product-name">LINK EARRING</div>
+      <div class="product-price">$720</div>
     </div>
     <div class="product-card" onclick="openDetail('link-necklace')">
       <div class="product-img-wrap"><img src="grid-link-necklace.webp" onerror="this.style.display='none'" alt="Link Necklace"><span class="ph">Link Necklace</span></div>
       <div class="product-name">LINK NECKLACE</div>
+      <div class="product-price">$2,040</div>
     </div>
     <div class="product-card" onclick="openDetail('link-necklace-ruby')">
       <div class="product-img-wrap"><img src="grid-link-necklace-ruby.webp" onerror="this.style.display='none'" alt="Link Necklace Ruby"><span class="ph">Link Necklace Ruby</span></div>
       <div class="product-name">LINK NECKLACE RUBY</div>
+      <div class="product-price">$3,000</div>
     </div>
   </div>
   <div id="amblem-products" class="amblem-svg amblem-products" style="position:fixed;bottom:28px;right:32px;z-index:10;display:none;"><svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
