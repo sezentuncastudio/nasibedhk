@@ -235,12 +235,12 @@
 
   /* ══ ABOUT ══ */
   #page-about { padding-top:69px; flex-direction:column; align-items:center; text-align:center; }
-  #page-privacy, #page-terms {
+  #page-privacy, #page-terms, #page-delivery-returns {
     padding-top:69px; display:none;
     flex-direction:column; align-items:center; text-align:center;
     overflow-y:auto;
   }
-  #page-privacy.active, #page-terms.active { display:flex; }
+  #page-privacy.active, #page-terms.active, #page-delivery-returns.active { display:flex; }
   .legal-body {
     max-width:560px; width:100%; padding:48px 32px 100px;
   }
@@ -262,6 +262,16 @@
     transition:opacity 0.2s;
   }
   .legal-back:hover { opacity:1; }
+  .legal-payment {
+    margin-top:40px; padding-top:28px;
+    border-top:0.5px solid rgba(124,105,94,0.2);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+  }
+  .legal-payment span {
+    font-size:8.8px; letter-spacing:0.2em; text-transform:uppercase;
+    opacity:0.45;
+  }
+  .legal-payment img { height:20px; width:auto; opacity:0.9; }
   #page-about.active { display:flex; }
   #page-about .split-pair { width:100%; }
   .about-portrait { width:260px; aspect-ratio:3/4; margin:30px auto 50px; background:#ffffff; overflow:hidden; }
@@ -630,7 +640,27 @@
   </div>
 </div>
 
-    <div class="inner-copyright">© Copyright by NASIBE&nbsp;DHK 2026. <a onclick="nav('privacy')" style="cursor:pointer;">Privacy</a><a onclick="nav('terms')" style="cursor:pointer;">Terms</a></div>
+<!-- ════════════════════════════════
+     DELIVERY & RETURNS
+════════════════════════════════ -->
+<div id="page-delivery-returns" class="page">
+  <div class="legal-body">
+    <span class="legal-back" onclick="history.go(-1) || nav('home')">← Back</span>
+    <h2>Delivery &amp; Returns</h2>
+    <h3>Delivery</h3>
+    <p>Each NASIBE piece is made by hand in Istanbul, in limited numbers or to order. Preparation times therefore vary with availability and the requirements of each piece. Once an order is placed, we will contact you to confirm the expected delivery date. Delivery arrangements are confirmed directly with the client.</p>
+    <h3>Returns &amp; Exchanges</h3>
+    <p>Should a piece not be right for you, please contact us before arranging any return. Returns are accepted within two weeks of receipt, provided the piece is unworn, unused and returned in its original packaging. Bespoke, personalised, engraved, resized and made-to-order pieces cannot ordinarily be returned or exchanged, save where consumer law provides otherwise.</p>
+    <h3>Secure Payment</h3>
+    <p>Payment is completed through a secure iyzico payment link, issued directly to you once your order is confirmed. Visa and Mastercard are accepted. Card details are processed by iyzico and are not stored by NASIBE.</p>
+    <div class="legal-payment">
+      <span>Pay with iyzico</span>
+      <img src="iyzico-band.svg" alt="Pay securely with iyzico — Visa and Mastercard accepted">
+    </div>
+  </div>
+</div>
+
+    <div class="inner-copyright">© Copyright by NASIBE&nbsp;DHK 2026. <a onclick="nav('privacy')" style="cursor:pointer;">Privacy</a><a onclick="nav('terms')" style="cursor:pointer;">Terms</a><a onclick="nav('deliveryReturns')" style="cursor:pointer;">Delivery &amp; Returns</a></div>
   </footer>
 </div>
 
@@ -769,7 +799,8 @@ document.addEventListener('click', function(e) {
 // ── Page router ──
 const pageMap = {
   home:'page-home', products:'page-products', detail:'page-detail',
-  about:'page-about', contact:'page-contact', privacy:'page-privacy', terms:'page-terms'
+  about:'page-about', contact:'page-contact', privacy:'page-privacy', terms:'page-terms',
+  deliveryReturns:'page-delivery-returns'
 };
 
 function nav(name, pushHistory) {
